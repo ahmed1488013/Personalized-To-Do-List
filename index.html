@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TaskMaster To-Do List</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #ffffff;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .todo-container {
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      border-radius: 10px;
+      background-color: #f9f9f9;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    .task-input {
+      display: flex;
+      margin-bottom: 20px;
+    }
+
+    .task-input input {
+      flex: 1;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .task-input button {
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      background-color: #4CAF50;
+      color: white;
+      margin-left: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .task-input button:hover {
+      background-color: #388E3C;
+    }
+
+    .task-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .task-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      background-color: #ffffff;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .task-item.completed {
+      text-decoration: line-through;
+      background-color: #e0e0e0;
+    }
+
+    .task-item button {
+      border: none;
+      background: none;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .complete-btn {
+      color: #4CAF50;
+    }
+
+    .delete-btn {
+      color: #FF6F61;
+    }
+
+    .complete-btn:hover {
+      color: #388E3C;
+    }
+
+    .delete-btn:hover {
+      color: #D32F2F;
+    }
+  </style>
+</head>
+<body>
+  <div class="todo-container">
+    <h1>TaskMaster</h1>
+    <div class="task-input">
+      <input type="text" id="taskInput" placeholder="Enter a new task...">
+      <button id="addTaskBtn">Add</button>
+    </div>
+    <ul class="task-list" id="taskList"></ul>
+  </div>
+
+  <script>
+    const taskInput = document.getElementById('taskInput');
+    const addTaskBtn = document.getElementById('addTaskBtn');
+    const taskList = document.getElementById('taskList');
+
+    addTaskBtn.addEventListener('click', addTask);
+
+    function addTask() {
+      const taskText = taskInput.value.trim();
+      if (taskText === '') return;
+
+      const taskItem = document.createElement('li');
+      taskItem.classList.add('task-item');
+      taskItem.innerHTML = `
+        <span>${taskText}</span>
+        <div>
+          <button class="complete-btn">&#10003;</button>
+          <button class="delete-btn">&#10005;</button>
+        </div>
+      `;
+
+      taskList.appendChild(taskItem);
+      taskInput.value = '';
+
+      const completeBtn = taskItem.querySelector('.complete-btn');
+      const deleteBtn = taskItem.querySelector('.delete-btn');
+
+      completeBtn.addEventListener('click', () => {
+        taskItem.classList.toggle('completed');
+      });
+
+      deleteBtn.addEventListener('click', () => {
+        taskList.removeChild(taskItem);
+      });
+    }
+  </script>
+</body>
+</html>
